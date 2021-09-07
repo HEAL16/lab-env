@@ -21,7 +21,7 @@ public:
 	vec4 operator-(const vec4& rhs);
 	void operator-=(const vec4& rhs);
 	void operator*=(const float scalar);
-	vec4 operator*(const float scalar);
+	vec4 operator*(const float scalar) const;
 	bool operator==(const vec4& rhs);
 	bool operator!=(const vec4& rhs);
 	float operator[](const unsigned int i);
@@ -31,4 +31,3 @@ public:
 float dot(const vec4& a, const vec4& b);
 float length(const vec4& v);
 vec4 normalize(const vec4& v);
-

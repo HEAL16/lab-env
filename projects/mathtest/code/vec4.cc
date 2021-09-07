@@ -77,7 +77,7 @@ void vec4::operator*=(const float scalar)
 	return;
 }
 
-vec4 vec4::operator*(const float scalar)
+vec4 vec4::operator*(const float scalar) const
 {
 	return vec4(this->x * scalar, this->y * scalar, this->z * scalar, this->w * scalar);
 }
@@ -120,8 +120,6 @@ const float vec4::operator[](const unsigned int i) const
 	if (j == 3) { return this->w; }
 }
 
-
-
 // Functions
 float dot(const vec4 & a, const vec4 & b)
 	{
@@ -138,5 +136,3 @@ vec4 normalize(const vec4& v)
 	float const scalar = length(v);
 	return vec4(v.x / scalar, v.y / scalar, v.z / scalar, v.w / scalar);
 }
-
-

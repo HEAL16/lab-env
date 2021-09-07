@@ -1,7 +1,6 @@
 #include "mat4.h"
 #include "vec4.h"
 // Constructores
-
 mat4::mat4()
 {
 	this->m[0] = vec4(1.0f, 0.0f, 0.0f, 0.0f);
@@ -37,29 +36,38 @@ void mat4::operator=(const mat4& rhs) //void
 		return;
 }
 
-mat4 mat4::operator*(const mat4 rhs) 
+mat4 mat4::operator*(const mat4& rhs) const
 {
 	return mat4(
 		vec4(
-			(m[0].x * rhs[0].x + m[0].x * rhs[0].y + m[0].x * rhs[0].z + m[0].x * rhs[0].w),
-			(m[1].x * rhs[1].x + m[1].x * rhs[1].y + m[1].x * rhs[1].z + m[1].x * rhs[1].w),
-			(m[2].x * rhs[2].x + m[2].x * rhs[2].y + m[2].x * rhs[2].z + m[2].x * rhs[2].w),
-			(m[3].x * rhs[3].x + m[3].x * rhs[3].y + m[3].x * rhs[3].z + m[3].x * rhs[3].w)),
+			(m[0].x * rhs[0].x + m[0].x * rhs[1].x + m[0].x * rhs[2].x + m[0].x * rhs[3].x),
+			(m[0].y * rhs[0].y + m[0].y * rhs[1].y + m[0].y * rhs[2].y + m[0].y * rhs[3].y),
+			(m[0].z * rhs[0].z + m[0].z * rhs[1].z + m[0].z * rhs[2].z + m[0].z * rhs[3].z),
+			(m[0].w * rhs[0].w + m[0].w * rhs[1].w + m[0].w * rhs[2].w + m[0].w * rhs[3].w)),
 		vec4(
-			(m[0].y * rhs[0].x + m[0].y * rhs[0].y + m[0].y * rhs[0].z + m[0].y * rhs[0].w),
-			(m[1].y * rhs[1].x + m[1].y * rhs[1].y + m[1].y * rhs[1].z + m[1].y * rhs[1].w),
-			(m[2].y * rhs[2].x + m[2].y * rhs[2].y + m[2].y * rhs[2].z + m[2].y * rhs[2].w),
-			(m[3].y * rhs[3].x + m[3].y * rhs[3].y + m[3].y * rhs[3].z + m[3].y * rhs[3].w)),
+			(m[1].x * rhs[0].x + m[1].x * rhs[1].x + m[1].x * rhs[2].x + m[1].x * rhs[3].x),
+			(m[1].y * rhs[0].y + m[1].y * rhs[1].y + m[1].y * rhs[2].y + m[1].y * rhs[3].y),
+			(m[1].z * rhs[0].z + m[1].z * rhs[1].z + m[1].z * rhs[2].z + m[1].z * rhs[3].z),
+			(m[1].w * rhs[0].w + m[1].w * rhs[1].w + m[1].w * rhs[2].w + m[1].w * rhs[3].w)),
 		vec4(
-			(m[0].z * rhs[0].x + m[0].z * rhs[0].y + m[0].z * rhs[0].z + m[0].z * rhs[0].w),
-			(m[1].z * rhs[1].x + m[1].z * rhs[1].y + m[1].z * rhs[1].z + m[1].z * rhs[1].w),
-			(m[2].z * rhs[2].x + m[2].z * rhs[2].y + m[2].z * rhs[2].z + m[2].z * rhs[2].w),
-			(m[3].z * rhs[3].x + m[3].z * rhs[3].y + m[3].z * rhs[3].z + m[3].z * rhs[3].w)),
+			(m[2].x * rhs[0].x + m[2].x * rhs[1].x + m[2].x * rhs[2].x + m[2].x * rhs[3].x),
+			(m[2].y * rhs[0].y + m[2].y * rhs[1].y + m[2].y * rhs[2].y + m[2].y * rhs[3].y),
+			(m[2].z * rhs[0].z + m[2].z * rhs[1].z + m[2].z * rhs[2].z + m[2].z * rhs[3].z),
+			(m[2].w * rhs[0].w + m[2].w * rhs[1].w + m[2].w * rhs[2].w + m[2].w * rhs[3].w)),
 		vec4(
-			(m[0].w * rhs[0].x + m[0].w * rhs[0].y + m[0].w * rhs[0].z + m[0].w * rhs[0].w),
-			(m[1].w * rhs[0].x + m[1].w * rhs[0].y + m[1].w * rhs[0].z + m[1].w * rhs[0].w),
-			(m[2].w * rhs[0].x + m[2].w * rhs[0].y + m[2].w * rhs[0].z + m[2].w * rhs[0].w),
-			(m[3].w * rhs[0].x + m[3].w * rhs[0].y + m[3].w * rhs[0].z + m[3].w * rhs[0].w)));
+			(m[3].x * rhs[0].x + m[3].x * rhs[1].x + m[3].x * rhs[2].x + m[3].x * rhs[3].x),
+			(m[3].y * rhs[0].y + m[3].y * rhs[1].y + m[3].y * rhs[2].y + m[3].y * rhs[3].y),
+			(m[3].z * rhs[0].z + m[3].z * rhs[1].z + m[3].z * rhs[2].z + m[3].z * rhs[3].z),
+			(m[3].w * rhs[0].w + m[3].w * rhs[1].w + m[3].w * rhs[2].w + m[3].w * rhs[3].w)));
+}
+
+vec4 mat4::operator*(const vec4& rhs) const
+{
+	return vec4(
+		(m[0].x * rhs.x + m[1].x * rhs.y + m[2].x * rhs.z + m[3].x * rhs.w),
+		(m[0].y * rhs.x + m[1].y * rhs.y + m[2].y * rhs.z + m[3].y * rhs.w),
+		(m[0].z * rhs.x + m[1].z * rhs.y + m[2].z * rhs.z + m[3].z * rhs.w),
+		(m[0].w * rhs.x + m[1].w * rhs.y + m[2].w * rhs.z + m[3].w * rhs.w));
 }
 
 bool mat4::operator==(const mat4& rhs)
@@ -100,12 +108,11 @@ const vec4& mat4::operator[](const unsigned int i) const
 	if (j == 3) { return this->m[3]; }
 }
 
-
 // Functions
 
 float determinant(const mat4& m)
 {
-	return
+	return 
 		  m[0].x*(m[1].y*m[2].z*m[3].w - m[1].y*m[2].w*m[3].z - m[1].z*m[2].y*m[3].w + m[1].z*m[2].w*m[3].y + m[1].w*m[2].y*m[3].z - m[1].w*m[2].z*m[3].y)
 		- m[0].y*(m[1].x*m[2].z*m[3].w - m[1].x*m[2].w*m[3].z - m[1].z*m[2].x*m[3].w + m[1].z*m[2].w*m[4].w + m[1].w*m[2].x*m[3].z - m[1].w*m[2].z*m[4].w)
 		+ m[0].z*(m[1].x*m[2].y*m[3].w - m[1].x*m[2].w*m[3].y - m[1].y*m[2].x*m[3].w + m[1].y*m[2].w*m[4].w + m[1].w*m[2].x*m[3].y - m[1].w*m[2].y*m[4].w)

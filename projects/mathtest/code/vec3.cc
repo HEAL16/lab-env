@@ -132,4 +132,3 @@ vec3 normalize(const vec3& v)
 	float const scalar = length(v);
 	return vec3(v.x / scalar, v.y / scalar, v.z / scalar);
 }
-
