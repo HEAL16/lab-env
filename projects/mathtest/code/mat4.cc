@@ -1,5 +1,6 @@
 #include "mat4.h"
 #include "vec4.h"
+#include <math.h>
 // Constructores
 mat4::mat4()
 {
@@ -111,12 +112,11 @@ const vec4& mat4::operator[](const unsigned int i) const
 // Functions
 
 float determinant(const mat4& m)
-{
-	return 
-		  m[0].x*(m[1].y*m[2].z*m[3].w - m[1].y*m[2].w*m[3].z - m[1].z*m[2].y*m[3].w + m[1].z*m[2].w*m[3].y + m[1].w*m[2].y*m[3].z - m[1].w*m[2].z*m[3].y)
-		- m[0].y*(m[1].x*m[2].z*m[3].w - m[1].x*m[2].w*m[3].z - m[1].z*m[2].x*m[3].w + m[1].z*m[2].w*m[4].w + m[1].w*m[2].x*m[3].z - m[1].w*m[2].z*m[4].w)
-		+ m[0].z*(m[1].x*m[2].y*m[3].w - m[1].x*m[2].w*m[3].y - m[1].y*m[2].x*m[3].w + m[1].y*m[2].w*m[4].w + m[1].w*m[2].x*m[3].y - m[1].w*m[2].y*m[4].w)
-		- m[0].w*(m[1].x*m[2].y*m[3].z - m[1].x*m[2].z*m[3].y - m[1].y*m[2].x*m[3].z + m[1].y*m[2].z*m[4].w + m[1].z*m[2].x*m[3].y - m[1].z*m[2].y*m[4].w);
+{	return
+		  m[0].x * (m[1].y * m[2].z * m[3].w - m[1].y * m[2].w * m[3].z - m[1].z * m[2].y * m[3].w + m[1].z * m[2].w * m[3].y + m[1].w * m[2].y * m[3].z - m[1].w * m[2].z * m[3].y)
+		- m[0].y * (m[1].x * m[2].z * m[3].w - m[1].x * m[2].w * m[3].z - m[1].z * m[2].x * m[3].w + m[1].z * m[2].w * m[4].w + m[1].w * m[2].x * m[3].z - m[1].w * m[2].z * m[4].w)
+		+ m[0].z * (m[1].x * m[2].y * m[3].w - m[1].x * m[2].w * m[3].y - m[1].y * m[2].x * m[3].w + m[1].y * m[2].w * m[4].w + m[1].w * m[2].x * m[3].y - m[1].w * m[2].y * m[4].w)
+		- m[0].w * (m[1].x * m[2].y * m[3].z - m[1].x * m[2].z * m[3].y - m[1].y * m[2].x * m[3].z + m[1].y * m[2].z * m[4].w + m[1].z * m[2].x * m[3].y - m[1].z * m[2].y * m[4].w);
 }
 
 mat4 inverse(const mat4& m)
@@ -131,20 +131,51 @@ mat4 transpose(const mat4& m)
 
 mat4 rotationx(const float& rad)
 {
-	return mat4();
+	return mat4(
+		vec4(1.0f,     0.0f,      0.0f, 0.0f),
+		vec4(0.0f, cos(rad), -sin(rad), 0.0f),
+		vec4(0.0f, sin(rad),  cos(rad), 0.0f),
+		vec4(0.0f,     0.0f,      0.0f, 1.0f)
+	);
 }
 
 mat4 rotationy(const float& rad)
 {
-	return mat4();
+	return mat4(
+		vec4( cos(rad), 0.0f, sin(rad), 0.0f),
+		vec4(     0.0f, 1.0f,     0.0f, 0.0f),
+		vec4(-sin(rad), 0.0f, cos(rad), 0.0f),
+		vec4     (0.0f, 0.0f,     0.0f, 1.0f)
+	);
 }
 
 mat4 rotationz(const float& rad)
 {
-	return mat4();
+	return mat4(
+		vec4(cos(rad),-sin(rad),  0.0f, 0.0f),
+		vec4(sin(rad), cos(rad),  0.0f, 0.0f),
+		vec4(    0.0f,     0.0f,  1.0f, 0.0f),
+		vec4(    0.0f,     0.0f,  0.0f, 1.0f)
+	);
 }
 
 mat4 rotationaxis(const vec3& v, const float rad)
 {
 	return mat4();
 }
+
+//float determinant(const mat4& m) {
+//	return
+//		m[0][3] * m[1][2] * m[2][1] * m[3][0] - m[0][2] * m[1][3] * m[2][1] * m[3][0] -
+//		m[0][3] * m[1][1] * m[2][2] * m[3][0] + m[0][1] * m[1][3] * m[2][2] * m[3][0] +
+//		m[0][2] * m[1][1] * m[2][3] * m[3][0] - m[0][1] * m[1][2] * m[2][3] * m[3][0] -
+//		m[0][3] * m[1][2] * m[2][0] * m[3][1] + m[0][2] * m[1][3] * m[2][0] * m[3][1] +
+//		m[0][3] * m[1][0] * m[2][2] * m[3][1] - m[0][0] * m[1][3] * m[2][2] * m[3][1] -
+//		m[0][2] * m[1][0] * m[2][3] * m[3][1] + m[0][0] * m[1][2] * m[2][3] * m[3][1] +
+//		m[0][3] * m[1][1] * m[2][0] * m[3][2] - m[0][1] * m[1][3] * m[2][0] * m[3][2] -
+//		m[0][3] * m[1][0] * m[2][1] * m[3][2] + m[0][0] * m[1][3] * m[2][1] * m[3][2] +
+//		m[0][1] * m[1][0] * m[2][3] * m[3][2] - m[0][0] * m[1][1] * m[2][3] * m[3][2] -
+//		m[0][2] * m[1][1] * m[2][0] * m[3][3] + m[0][1] * m[1][2] * m[2][0] * m[3][3] +
+//		m[0][2] * m[1][0] * m[2][1] * m[3][3] - m[0][0] * m[1][2] * m[2][1] * m[3][3] -
+//		m[0][1] * m[1][0] * m[2][2] * m[3][3] + m[0][0] * m[1][1] * m[2][2] * m[3][3];
+//}
