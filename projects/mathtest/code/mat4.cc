@@ -126,15 +126,19 @@ mat4 inverse(const mat4& m)
 
 mat4 transpose(const mat4& m)
 {
-	return mat4();
+	return mat4(
+		vec4(m[0].x, m[1].x, m[2].x, m[3].x),
+		vec4(m[0].y, m[1].y, m[2].y, m[3].y),
+		vec4(m[0].z, m[1].z, m[2].z, m[3].z),
+		vec4(m[0].w, m[1].w, m[2].w, m[3].w));
 }
 
 mat4 rotationx(const float& rad)
 {
 	return mat4(
 		vec4(1.0f,     0.0f,      0.0f, 0.0f),
-		vec4(0.0f, cos(rad), -sin(rad), 0.0f),
-		vec4(0.0f, sin(rad),  cos(rad), 0.0f),
+		vec4(0.0f, cos(rad),  sin(rad), 0.0f),
+		vec4(0.0f,-sin(rad),  cos(rad), 0.0f),
 		vec4(0.0f,     0.0f,      0.0f, 1.0f)
 	);
 }
@@ -142,9 +146,9 @@ mat4 rotationx(const float& rad)
 mat4 rotationy(const float& rad)
 {
 	return mat4(
-		vec4( cos(rad), 0.0f, sin(rad), 0.0f),
+		vec4( cos(rad), 0.0f,-sin(rad), 0.0f),
 		vec4(     0.0f, 1.0f,     0.0f, 0.0f),
-		vec4(-sin(rad), 0.0f, cos(rad), 0.0f),
+		vec4( sin(rad), 0.0f, cos(rad), 0.0f),
 		vec4     (0.0f, 0.0f,     0.0f, 1.0f)
 	);
 }
@@ -152,10 +156,10 @@ mat4 rotationy(const float& rad)
 mat4 rotationz(const float& rad)
 {
 	return mat4(
-		vec4(cos(rad),-sin(rad),  0.0f, 0.0f),
-		vec4(sin(rad), cos(rad),  0.0f, 0.0f),
-		vec4(    0.0f,     0.0f,  1.0f, 0.0f),
-		vec4(    0.0f,     0.0f,  0.0f, 1.0f)
+		vec4( cos(rad), sin(rad),  0.0f, 0.0f),
+		vec4(-sin(rad), cos(rad),  0.0f, 0.0f),
+		vec4(     0.0f,     0.0f,  1.0f, 0.0f),
+		vec4(     0.0f,     0.0f,  0.0f, 1.0f)
 	);
 }
 

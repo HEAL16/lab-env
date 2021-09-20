@@ -244,7 +244,7 @@ int main()
         VERIFY((result == pOneTwoThree));
 
         // multiplication and multiplication order, transform point by matrix
-        const mat4 mRotOneX_Trans123 = rotOneX * trans123;
+        const mat4 mRotOneX_Trans123 = transpose(rotOneX) * transpose(trans123);
         VERIFY(matnearequal(mRotOneX_Trans123,
                             mat4(vec4(1.0f,       0.0f,      0.0f, 0.0f),
                                  vec4(0.0f,  0.540302f, 0.841471f, 0.0f),
