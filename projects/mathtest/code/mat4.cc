@@ -1,4 +1,4 @@
-#include "mat4.h"
+﻿#include "mat4.h"
 #include "vec4.h"
 #include <math.h>
 // Constructores
@@ -41,25 +41,25 @@ mat4 mat4::operator*(const mat4& rhs) const
 {
 	return mat4(
 		vec4(
-			(m[0].x * rhs[0].x + m[0].x * rhs[1].x + m[0].x * rhs[2].x + m[0].x * rhs[3].x),
-			(m[0].y * rhs[0].y + m[0].y * rhs[1].y + m[0].y * rhs[2].y + m[0].y * rhs[3].y),
-			(m[0].z * rhs[0].z + m[0].z * rhs[1].z + m[0].z * rhs[2].z + m[0].z * rhs[3].z),
-			(m[0].w * rhs[0].w + m[0].w * rhs[1].w + m[0].w * rhs[2].w + m[0].w * rhs[3].w)),
+			(rhs[0].x * m[0].x + rhs[1].x * m[0].y + rhs[2].x * m[0].z + rhs[3].x * m[0].w),
+			(rhs[0].y * m[0].x + rhs[1].y * m[0].y + rhs[2].y * m[0].z + rhs[3].y * m[0].w),
+			(rhs[0].z * m[0].x + rhs[1].z * m[0].y + rhs[2].z * m[0].z + rhs[3].z * m[0].w),
+			(rhs[0].w * m[0].x + rhs[1].w * m[0].y + rhs[2].w * m[0].z + rhs[3].w * m[0].w)),
 		vec4(
-			(m[1].x * rhs[0].x + m[1].x * rhs[1].x + m[1].x * rhs[2].x + m[1].x * rhs[3].x),
-			(m[1].y * rhs[0].y + m[1].y * rhs[1].y + m[1].y * rhs[2].y + m[1].y * rhs[3].y),
-			(m[1].z * rhs[0].z + m[1].z * rhs[1].z + m[1].z * rhs[2].z + m[1].z * rhs[3].z),
-			(m[1].w * rhs[0].w + m[1].w * rhs[1].w + m[1].w * rhs[2].w + m[1].w * rhs[3].w)),
+			(rhs[0].x * m[1].x + rhs[1].x * m[1].y + rhs[2].x * m[1].z + rhs[3].x * m[1].w),
+			(rhs[0].y * m[1].x + rhs[1].y * m[1].y + rhs[2].y * m[1].z + rhs[3].y * m[1].w),
+			(rhs[0].z * m[1].x + rhs[1].z * m[1].y + rhs[2].z * m[1].z + rhs[3].z * m[1].w),
+			(rhs[0].w * m[1].x + rhs[1].w * m[1].y + rhs[2].w * m[1].z + rhs[3].w * m[1].w)),
 		vec4(
-			(m[2].x * rhs[0].x + m[2].x * rhs[1].x + m[2].x * rhs[2].x + m[2].x * rhs[3].x),
-			(m[2].y * rhs[0].y + m[2].y * rhs[1].y + m[2].y * rhs[2].y + m[2].y * rhs[3].y),
-			(m[2].z * rhs[0].z + m[2].z * rhs[1].z + m[2].z * rhs[2].z + m[2].z * rhs[3].z),
-			(m[2].w * rhs[0].w + m[2].w * rhs[1].w + m[2].w * rhs[2].w + m[2].w * rhs[3].w)),
+			(rhs[0].x * m[2].x + rhs[1].x * m[2].y + rhs[2].x * m[2].z + rhs[3].x * m[2].w),
+			(rhs[0].y * m[2].x + rhs[1].y * m[2].y + rhs[2].y * m[2].z + rhs[3].y * m[2].w),
+			(rhs[0].z * m[2].x + rhs[1].z * m[2].y + rhs[2].z * m[2].z + rhs[3].z * m[2].w),
+			(rhs[0].w * m[2].x + rhs[1].w * m[2].y + rhs[2].w * m[2].z + rhs[3].w * m[2].w)),
 		vec4(
-			(m[3].x * rhs[0].x + m[3].x * rhs[1].x + m[3].x * rhs[2].x + m[3].x * rhs[3].x),
-			(m[3].y * rhs[0].y + m[3].y * rhs[1].y + m[3].y * rhs[2].y + m[3].y * rhs[3].y),
-			(m[3].z * rhs[0].z + m[3].z * rhs[1].z + m[3].z * rhs[2].z + m[3].z * rhs[3].z),
-			(m[3].w * rhs[0].w + m[3].w * rhs[1].w + m[3].w * rhs[2].w + m[3].w * rhs[3].w)));
+			(rhs[0].x * m[3].x + rhs[1].x * m[3].y + rhs[2].x * m[3].z + rhs[3].x * m[3].w),
+			(rhs[0].y * m[3].x + rhs[1].y * m[3].y + rhs[2].y * m[3].z + rhs[3].y * m[3].w),
+			(rhs[0].z * m[3].x + rhs[1].z * m[3].y + rhs[2].z * m[3].z + rhs[3].z * m[3].w),
+			(rhs[0].w * m[3].x + rhs[1].w * m[3].y + rhs[2].w * m[3].z + rhs[3].w * m[3].w)));
 }
 
 vec4 mat4::operator*(const vec4& rhs) const
@@ -121,7 +121,36 @@ float determinant(const mat4& m)
 
 mat4 inverse(const mat4& m)
 {
-	return mat4();
+	float det = determinant(m);
+	if (det == 0)
+	{
+		return mat4();
+
+	}
+	det = 1 / det;
+
+	return mat4(
+		vec4(m[1].y*m[2].z*m[3].w + m[1].z*m[2].w*m[3].y + m[1].w*m[2].y*m[3].z - m[1].y*m[2].w*m[3].z - m[1].z*m[2].y*m[3].w - m[1].w*m[2].z*m[3].y,
+			 m[0].y*m[2].w*m[3].z + m[0].z*m[2].y*m[3].w + m[0].w*m[2].z*m[3].y - m[0].y*m[2].w*m[3].w - m[0].z*m[2].w*m[3].y - m[0].w*m[2].y*m[3].z,
+			 m[0].y*m[1].z*m[3].w + m[0].z*m[1].w*m[3].y + m[0].w*m[1].y*m[3].z - m[0].y*m[1].w*m[3].z - m[0].z*m[1].y*m[3].w - m[0].w*m[1].z*m[3].y,
+			 m[0].y*m[1].w*m[2].z + m[0].z*m[1].y*m[2].w + m[0].w*m[1].z*m[2].y - m[0].y*m[1].z*m[2].w - m[0].z*m[1].w*m[2].y - m[0].w*m[1].y*m[2].z
+			)*det,
+		vec4(m[1].x*m[2].w*m[3].z + m[1].z*m[2].x*m[3].w + m[1].w*m[2].z*m[3].x - m[1].x*m[2].z*m[3].w - m[1].z*m[2].w*m[3].x - m[1].w*m[2].x*m[3].z,
+			 m[0].x*m[2].z*m[3].w + m[0].z*m[2].w*m[3].x + m[0].w*m[2].x*m[3].z - m[0].x*m[2].w*m[3].z - m[0].z*m[2].x*m[3].w - m[0].w*m[2].z*m[3].x,
+			 m[0].x*m[1].w*m[3].z + m[0].z*m[1].x*m[3].w + m[0].w*m[1].z*m[3].x - m[0].x*m[1].z*m[3].w - m[0].z*m[1].w*m[3].x - m[0].w*m[1].x*m[3].z,
+			 m[0].x*m[1].z*m[2].w + m[0].z*m[1].w*m[2].x + m[0].w*m[1].x*m[2].z - m[0].x*m[1].w*m[2].z - m[0].z*m[1].x*m[2].w - m[0].w*m[1].z*m[2].x
+			)*det,
+		vec4(m[1].x*m[2].y*m[3].w + m[1].y*m[2].w*m[3].x + m[1].w*m[2].x*m[3].y - m[1].x*m[2].w*m[3].y - m[1].y*m[2].x*m[3].w - m[1].w*m[2].y*m[3].x,
+			 m[0].x*m[2].w*m[3].y + m[0].y*m[2].x*m[3].w + m[0].w*m[2].y*m[3].x - m[0].x*m[2].y*m[3].w - m[0].y*m[2].w*m[3].x - m[0].w*m[2].x*m[3].y,
+			 m[0].x*m[1].y*m[3].w + m[0].y*m[1].w*m[3].x + m[0].w*m[1].x*m[3].y - m[0].x*m[1].w*m[3].y - m[0].y*m[1].x*m[3].w - m[0].w*m[1].y*m[3].x,
+			 m[0].x*m[1].w*m[2].y + m[0].y*m[1].x*m[2].w + m[0].w*m[1].y*m[2].x - m[0].x*m[1].y*m[2].w - m[0].y*m[1].w*m[2].x - m[0].w*m[1].x*m[2].y
+			)*det,
+		vec4(m[1].x*m[2].z*m[3].y + m[1].y*m[2].x*m[3].z + m[1].z*m[2].y*m[3].x - m[1].x*m[2].y*m[3].z - m[1].y*m[2].z*m[3].x - m[1].z*m[2].x*m[3].y,
+			 m[0].x*m[2].y*m[3].z + m[0].y*m[2].z*m[3].x + m[0].z*m[2].x*m[3].y - m[0].x*m[2].z*m[3].y - m[0].y*m[2].x*m[3].z - m[0].z*m[2].y*m[3].x,
+			 m[0].x*m[1].z*m[3].y + m[0].y*m[1].x*m[3].z + m[0].z*m[1].y*m[3].x - m[0].x*m[1].y*m[3].z - m[0].y*m[1].z*m[3].x - m[0].z*m[1].x*m[3].y,
+			 m[0].x*m[1].y*m[2].z + m[0].y*m[1].z*m[2].x + m[0].z*m[1].x*m[2].y - m[0].x*m[1].z*m[2].y - m[0].y*m[1].x*m[2].z - m[0].z*m[1].y*m[2].x
+			)*det
+	);
 }
 
 mat4 transpose(const mat4& m)
@@ -165,21 +194,9 @@ mat4 rotationz(const float& rad)
 
 mat4 rotationaxis(const vec3& v, const float rad)
 {
-	return mat4();
+	return mat4(
+		vec4((v.x * v.x) + ((v.y * v.y) + (v.z * v.z)) * cos(rad),          v.x * v.y * (1 - cos(rad)) + v.z * sin(rad),          v.x * v.z * (1 - cos(rad)) - v.y * sin(rad), 0.0f),
+		vec4(         v.x * v.y * (1 - cos(rad)) - v.z * sin(rad), (v.y * v.y) + ((v.x * v.x) + (v.z * v.z)) * cos(rad),          v.y * v.z * (1 - cos(rad)) + v.x * sin(rad), 0.0f),
+		vec4(         v.x * v.z * (1 - cos(rad)) + v.y * sin(rad),           v.y * v.z *(1 - cos(rad)) - v.x * sin(rad), (v.z * v.z) + ((v.x * v.x) + (v.y * v.y)) * cos(rad), 0.0f),
+		vec4(                                                0.0f,                                                 0.0f,                                                 0.0f, 1.0f));
 }
-
-//float determinant(const mat4& m) {
-//	return
-//		m[0][3] * m[1][2] * m[2][1] * m[3][0] - m[0][2] * m[1][3] * m[2][1] * m[3][0] -
-//		m[0][3] * m[1][1] * m[2][2] * m[3][0] + m[0][1] * m[1][3] * m[2][2] * m[3][0] +
-//		m[0][2] * m[1][1] * m[2][3] * m[3][0] - m[0][1] * m[1][2] * m[2][3] * m[3][0] -
-//		m[0][3] * m[1][2] * m[2][0] * m[3][1] + m[0][2] * m[1][3] * m[2][0] * m[3][1] +
-//		m[0][3] * m[1][0] * m[2][2] * m[3][1] - m[0][0] * m[1][3] * m[2][2] * m[3][1] -
-//		m[0][2] * m[1][0] * m[2][3] * m[3][1] + m[0][0] * m[1][2] * m[2][3] * m[3][1] +
-//		m[0][3] * m[1][1] * m[2][0] * m[3][2] - m[0][1] * m[1][3] * m[2][0] * m[3][2] -
-//		m[0][3] * m[1][0] * m[2][1] * m[3][2] + m[0][0] * m[1][3] * m[2][1] * m[3][2] +
-//		m[0][1] * m[1][0] * m[2][3] * m[3][2] - m[0][0] * m[1][1] * m[2][3] * m[3][2] -
-//		m[0][2] * m[1][1] * m[2][0] * m[3][3] + m[0][1] * m[1][2] * m[2][0] * m[3][3] +
-//		m[0][2] * m[1][0] * m[2][1] * m[3][3] - m[0][0] * m[1][2] * m[2][1] * m[3][3] -
-//		m[0][1] * m[1][0] * m[2][2] * m[3][3] + m[0][0] * m[1][1] * m[2][2] * m[3][3];
-//}
